@@ -10,6 +10,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       padding: '0 150px',
     },
+    fontFamily: '"Hammersmith One", sans-serif',
+    src: 'url(\'https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap\')',
   },
   content: {
     maxWidth: 1200,
