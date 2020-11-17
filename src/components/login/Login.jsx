@@ -10,7 +10,7 @@ import { userContext } from '../../context/UserContext';
 const useStyles = makeStyles(() => ({
   root: {
     padding: 20,
-    maxWidth: 300,
+    width: 300,
     '& > h2': {
       margin: 0,
       marginBottom: 20,

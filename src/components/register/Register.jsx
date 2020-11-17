@@ -1,16 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { userContext } from '../../context/UserContext';
 
 const useStyles = makeStyles(() => ({
   root: {
     padding: 20,
-    maxWidth: 300,
+    width: 300,
     '& > h2': {
       margin: 0,
       marginBottom: 20,
@@ -33,7 +32,6 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPass, setRepeatPass] = useState('');
-  const { currentUser } = useContext(userContext);
 
   const handleUsernameChange = (event) => {
     const { value } = event.target;
