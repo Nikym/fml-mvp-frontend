@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     padding: 20,
     maxWidth: 300,
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
 
-  return (ß
+  return (
     <Paper elevation={3} className={classes.root}>
       <h2>Login</h2>
       <Box className={classes.inputs} mb={2}>
