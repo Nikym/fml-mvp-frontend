@@ -45,15 +45,17 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    axios.post('http://192.168.0.11:8000/auth/login',
+    axios.post('http://localhost:8000/auth/login',
       {
         username,
         password,
+      }, {
+        withCredentials: true,
       })
       .then((res) => {
         if (res.status === 200) {
           userDispatch({
-            action: 'SET_USER',
+            type: 'SET_USER',
             payload: {
               username: res.data.username,
               token: res.data.token,

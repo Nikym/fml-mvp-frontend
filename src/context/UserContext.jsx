@@ -51,7 +51,9 @@ const UserContext = ({ children }) => {
   const [apiResponse, setApiResponse] = useState(undefined);
 
   const submitRefreshToken = () => {
-    axios.get('http://192.168.0.11:8000/auth/token')
+    axios.get('http://localhost:8000/auth/token', {
+      withCredentials: true,
+    })
       .then((res) => {
         if (res.status !== 200) {
           setApiResponse(undefined);

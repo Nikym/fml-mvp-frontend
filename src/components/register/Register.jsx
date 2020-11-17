@@ -51,7 +51,7 @@ const Register = () => {
   };
 
   const handleRegister = () => {
-    axios.post('http://192.168.0.11:8000/auth/register',
+    axios.post('http://localhost:8000/auth/register',
       {
         username,
         password,
