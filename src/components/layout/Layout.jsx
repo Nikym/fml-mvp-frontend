@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     maxWidth: 1200,
+    width: '100%',
   },
   titleContainer: {
     display: 'flex',
