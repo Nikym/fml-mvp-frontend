@@ -24,6 +24,9 @@ const useStyles = makeStyles(() => ({
     },
     color: 'WhiteSmoke',
   },
+  error: {
+    color: 'red',
+  },
 }));
 
 const Register = () => {
@@ -31,6 +34,8 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPass, setRepeatPass] = useState('');
+  const [msg, setMsg] = useState({ msg: undefined, color: undefined });
+  const [loading, setLoading] = useState(false);
 
   const handleUsernameChange = (event) => {
     const { value } = event.target;
@@ -48,6 +53,15 @@ const Register = () => {
   };
 
   const handleRegister = () => {
+    setLoading(true);
+    if (repeatPass !== password) {
+      setMsg({
+        msg: 'Passwords must match',
+        color: 'red',
+      });
+      return;
+    }
+
     axios.post('http://localhost:8000/auth/register',
       {
         username,
@@ -55,11 +69,21 @@ const Register = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          console.log('success registering');
+          setMsg({
+            msg: 'User successfully registered!',
+            color: 'green',
+          });
         }
+        setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        if (err.response) {
+          setMsg({
+            msg: err.response.data.error,
+            color: 'red',
+          });
+        }
+        setLoading(false);
       });
   };
 
@@ -96,17 +120,26 @@ const Register = () => {
           fullWidth
         />
       </Box>
-      <Box>
+      <Box mb={2}>
         <Button
           className={classes.button}
           variant="contained"
           size="large"
           onClick={handleRegister}
+          disabled={loading}
           fullWidth
         >
-          Register
+          {loading ? '...' : 'Register'}
         </Button>
       </Box>
+      {
+        msg.msg
+        && (
+        <small className={classes.error} style={{ color: msg.color }}>
+          {msg.msg}
+        </small>
+        )
+      }
     </>
   );
 };
