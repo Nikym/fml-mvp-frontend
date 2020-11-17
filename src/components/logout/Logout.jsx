@@ -1,9 +1,25 @@
 import React, { useContext } from 'react';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Box from '@material-ui/core/Box';
 import { userContext } from '../../context/UserContext';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+  },
+  button: {
+    backgroundColor: 'rgb(0,25,168)',
+    '&:hover': {
+      backgroundColor: 'rgb(20,45,188)',
+    },
+    color: 'WhiteSmoke',
+  },
+}));
+
 const Logout = () => {
+  const classes = useStyles();
   const { userDispatch } = useContext(userContext);
 
   const handleLogout = () => {
@@ -21,14 +37,15 @@ const Logout = () => {
   };
 
   return (
-    <Button
-      variant="contained"
-      size="large"
-      onClick={handleLogout}
-      fullWidth
-    >
-      Logout
-    </Button>
+    <Box className={classes.root}>
+      <IconButton
+        className={classes.button}
+        size="large"
+        onClick={handleLogout}
+      >
+        <ExitToAppIcon />
+      </IconButton>
+    </Box>
   );
 };
 

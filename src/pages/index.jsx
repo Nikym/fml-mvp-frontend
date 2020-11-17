@@ -4,6 +4,7 @@ import Layout from '../components/layout/Layout';
 
 const useStyles = makeStyles(() => ({
   root: {
+    marginTop: 20,
     textAlign: 'center',
   },
 }));

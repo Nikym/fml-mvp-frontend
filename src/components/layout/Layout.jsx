@@ -20,8 +20,25 @@ const useStyles = makeStyles((theme) => ({
   content: {
     maxWidth: 1200,
   },
+  titleContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    marginBottom: 25,
+    width: '100%',
+    maxWidth: 1200,
+    textAlign: 'left',
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'center',
+    },
+  },
   title: {
-    fontSize: 55,
+    margin: 0,
+    fontSize: 30,
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 45,
+    },
   },
 }));
 
@@ -36,23 +53,12 @@ const Layout = ({ children }) => {
 
   return (
     <div className={classes.root}>
-      <h1 className={classes.title}>Find My Lines</h1>
-      {isLoggedIn
-        ? <Logout />
-        : (
-          <>
-            <h1>Welcome!</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Sed sagittis porta nisl eu dapibus. Etiam elit felis, ultricies ut lacinia molestie,
-              placerat eu ligula. In consequat nibh ex, sed laoreet lorem elementum eget.
-              Suspendisse faucibus metus in lobortis hendrerit. Morbi sagittis sapien quis
-              nisi aliquam, at volutpat lacus venenatis. Nam eleifend lacus sed nisl faucibus
-              iaculis. Duis porttitor finibus massa, id suscipit ante gravida at.
-            </p>
-            <AuthHandler />
-          </>
-        )}
+      <div className={classes.titleContainer}>
+        <h1 className={classes.title}>Find My Lines</h1>
+        {isLoggedIn && <Logout />}
+      </div>
+
+      {!isLoggedIn && <AuthHandler />}
       <div className={classes.content}>
         {children}
       </div>
