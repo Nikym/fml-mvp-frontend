@@ -82,6 +82,11 @@ const Register = () => {
             msg: err.response.data.error,
             color: 'red',
           });
+        } else {
+          setMsg({
+            msg: 'Oops, something went wrong',
+            color: 'red',
+          });
         }
         setLoading(false);
       });
@@ -106,6 +111,7 @@ const Register = () => {
           label="Password"
           variant="outlined"
           value={password}
+          type="password"
           onChange={handlePasswordChange}
           fullWidth
         />
@@ -116,6 +122,7 @@ const Register = () => {
           label="Repeat password"
           variant="outlined"
           value={repeatPass}
+          type="password"
           onChange={handleRepeatPasswordChange}
           fullWidth
         />
