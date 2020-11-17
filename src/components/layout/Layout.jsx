@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { userContext } from '../../context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ children }) => {
   const classes = useStyles();
+  const { refreshToken } = useContext(userContext);
+
+  useEffect(() => {
+    refreshToken();
+  }, []);
 
   return (
     <div className={classes.root}>
