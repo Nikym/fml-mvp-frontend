@@ -2,9 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { userContext } from '../../context/UserContext';
-import Register from '../register/Register';
+import AuthHandler from '../authHandler/AuthHandler';
 import Logout from '../logout/Logout';
-import Login from '../login/Login';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +50,7 @@ const Layout = ({ children }) => {
               nisi aliquam, at volutpat lacus venenatis. Nam eleifend lacus sed nisl faucibus
               iaculis. Duis porttitor finibus massa, id suscipit ante gravida at.
             </p>
-            <Login />
+            <AuthHandler />
           </>
         )}
       <div className={classes.content}>
