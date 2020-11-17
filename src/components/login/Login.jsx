@@ -32,6 +32,8 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { userDispatch } = useContext(userContext);
+  const [msg, setMsg] = useState({ msg: undefined, color: undefined });
+  const [loading, setLoading] = useState(false);
 
   const handleUsernameChange = (event) => {
     const { value } = event.target;
@@ -44,6 +46,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    setLoading(true);
     axios.post('http://localhost:8000/auth/login',
       {
         username,
@@ -61,9 +64,21 @@ const Login = () => {
             },
           });
         }
+        setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        if (err.response) {
+          setMsg({
+            msg: err.response.data.error,
+            color: 'red',
+          });
+        } else {
+          setMsg({
+            msg: 'Oops, something went wrong',
+            color: 'red',
+          });
+        }
+        setLoading(false);
       });
   };
 
@@ -86,21 +101,31 @@ const Login = () => {
           label="Password"
           variant="outlined"
           value={password}
+          type="password"
           onChange={handlePasswordChange}
           fullWidth
         />
       </Box>
-      <Box>
+      <Box mb={2}>
         <Button
           className={classes.button}
           variant="contained"
           size="large"
           onClick={handleLogin}
+          disabled={loading}
           fullWidth
         >
-          Login
+          {loading ? '...' : 'Login'}
         </Button>
       </Box>
+      {
+        msg.msg
+        && (
+        <small className={classes.error} style={{ color: msg.color }}>
+          {msg.msg}
+        </small>
+        )
+      }
     </>
   );
 };
