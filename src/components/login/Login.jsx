@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
+import { userContext } from '../../context/UserContext';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -28,6 +30,41 @@ const useStyles = makeStyles(() => ({
 
 const Login = () => {
   const classes = useStyles();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { userDispatch } = useContext(userContext);
+
+  const handleUsernameChange = (event) => {
+    const { value } = event.target;
+    setUsername(value);
+  };
+
+  const handlePasswordChange = (event) => {
+    const { value } = event.target;
+    setPassword(value);
+  };
+
+  const handleLogin = () => {
+    axios.post('http://192.168.0.11:8000/auth/login',
+      {
+        username,
+        password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          userDispatch({
+            action: 'SET_USER',
+            payload: {
+              username: res.data.username,
+              token: res.data.token,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <Paper elevation={3} className={classes.root}>
@@ -37,6 +74,8 @@ const Login = () => {
           id="username"
           label="Username"
           variant="outlined"
+          value={username}
+          onChange={handleUsernameChange}
           fullWidth
         />
       </Box>
@@ -45,6 +84,8 @@ const Login = () => {
           id="password"
           label="Password"
           variant="outlined"
+          value={password}
+          onChange={handlePasswordChange}
           fullWidth
         />
       </Box>
@@ -53,6 +94,7 @@ const Login = () => {
           className={classes.button}
           variant="contained"
           size="large"
+          onClick={handleLogin}
           fullWidth
         >
           Login
