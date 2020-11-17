@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -65,7 +64,7 @@ const Register = () => {
   };
 
   return (
-    <Paper elevation={3} className={classes.root}>
+    <>
       <h2>Register</h2>
       <Box className={classes.inputs} mb={2}>
         <TextField
@@ -108,7 +107,7 @@ const Register = () => {
           Register
         </Button>
       </Box>
-    </Paper>
+    </>
   );
 };
 
