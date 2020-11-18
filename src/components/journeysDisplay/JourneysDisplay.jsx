@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -7,57 +8,6 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import Journey from '../journey/Journey';
-
-const mockJourneys = {
-  journeys: [
-    {
-      start: 'SE8 5RU',
-      end: 'WC1A 2SL',
-      routes: [
-        {
-          orderedLines: [
-            {
-              name: 'DLR',
-            },
-            {
-              name: 'Victoria',
-            },
-          ],
-          journeyTime: 35,
-        },
-        {
-          orderedLines: [
-            {
-              name: 'Jubilee',
-            },
-          ],
-          journeyTime: 20,
-        },
-      ],
-      meanJourneyTime: 27.5,
-      includesNoChangeRoute: true,
-    },
-    {
-      start: 'SE8 5RU',
-      end: 'WC1A 2SL',
-      routes: [
-        {
-          orderedLines: [
-            {
-              name: 'DLR',
-            },
-            {
-              name: 'Victoria',
-            },
-          ],
-          journeyTime: 35,
-        },
-      ],
-      meanJourneyTime: 27.5,
-      includesNoChangeRoute: false,
-    },
-  ],
-};
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -179,7 +129,11 @@ const JourneysDisplay = () => {
       {
         journeys.length > 0
           ? journeys.map((journey) => <Journey journey={journey} />)
-          : <p className={classes.searchText}>Search results appear here</p>
+          : (
+            loading
+              ? <p className={classes.searchText}>Loading...</p>
+              : <p className={classes.searchText}>Search results appear here</p>
+          )
       }
     </div>
   );
