@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -94,6 +94,7 @@ const JourneysDisplay = () => {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [journeys, setJourneys] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleChangeFrom = (event) => {
     const { value } = event.target;
@@ -107,6 +108,25 @@ const JourneysDisplay = () => {
 
   const handleSubmit = () => {
   };
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get('http://localhost:9095/history', {
+      params: {
+        jwt: localStorage.getItem('accessToken'),
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setJourneys(res.data.journeys);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -148,6 +168,7 @@ const JourneysDisplay = () => {
               size="large"
               className={classes.button}
               fullWidth
+              onClick={handleSubmit}
               disabled={!from || !to}
             >
               Search
@@ -156,8 +177,8 @@ const JourneysDisplay = () => {
         </Grid>
       </Grid>
       {
-        journeys.length === 0
-          ? mockJourneys.journeys.map((journey) => <Journey journey={journey} />)
+        journeys.length > 0
+          ? journeys.map((journey) => <Journey journey={journey} />)
           : <p className={classes.searchText}>Search results appear here</p>
       }
     </div>
