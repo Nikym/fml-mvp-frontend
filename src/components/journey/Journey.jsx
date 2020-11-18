@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles(() => ({
   root: {
     padding: 20,
+    marginBottom: 20,
   },
   title: {
     margin: 0,
@@ -132,13 +133,17 @@ Route.propTypes = {
 const Journey = ({ journey }) => {
   const classes = useStyles();
   const {
-    start, end, routes, meanJourneyTime,
+    start, end, routes, meanJourneyTime, includesNoChangeRoute,
   } = journey;
 
   return (
-    <Paper elevation={2} className={classes.root}>
+    <Paper
+      elevation={2}
+      className={classes.root}
+      style={includesNoChangeRoute ? { backgroundColor: '#f6fff7' } : undefined}
+    >
       <h2 className={classes.title}>{`${start} to ${end}`}</h2>
-      <p>{`Mean time: ${meanJourneyTime}m`}</p>
+      <p className={classes.timeText}>{`Mean time: ${meanJourneyTime}m`}</p>
       {routes.map((route) => <Route route={route} />)}
     </Paper>
   );
