@@ -65,6 +65,7 @@ const useStyles = makeStyles(() => ({
   },
   search: {
     maxWidth: 800,
+    marginBottom: 20,
   },
   inputs: {
     marginRight: 20,
@@ -80,12 +81,19 @@ const useStyles = makeStyles(() => ({
     },
     color: 'WhiteSmoke',
   },
+  searchText: {
+    color: 'lightgrey',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 100,
+  },
 }));
 
 const JourneysDisplay = () => {
   const classes = useStyles();
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
+  const [journeys, setJourneys] = useState([]);
 
   const handleChangeFrom = (event) => {
     const { value } = event.target;
@@ -147,7 +155,11 @@ const JourneysDisplay = () => {
           </Box>
         </Grid>
       </Grid>
-      {mockJourneys.journeys.map((journey) => <Journey journey={journey} />)}
+      {
+        journeys.length === 0
+          ? mockJourneys.journeys.map((journey) => <Journey journey={journey} />)
+          : <p className={classes.searchText}>Search results appear here</p>
+      }
     </div>
   );
 };
