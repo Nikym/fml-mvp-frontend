@@ -56,10 +56,7 @@ const JourneysDisplay = () => {
     setTo(value);
   };
 
-  const handleSubmit = () => {
-  };
-
-  useEffect(() => {
+  const loadHistory = () => {
     setLoading(true);
     axios.get('http://localhost:9095/history', {
       params: {
@@ -76,6 +73,64 @@ const JourneysDisplay = () => {
         console.log(err);
         setLoading(false);
       });
+  };
+
+  const handleSubmit = () => {
+    axios.get('http://localhost:9095/journey', {
+      params: {
+        jwt: localStorage.getItem('accessToken'),
+        start: from,
+        end: to,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          const { data: journey } = res;
+          setJourneys((prevJourneys) => [journey, ...prevJourneys]);
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          axios.get(`https://api.tfl.gov.uk/Journey/JourneyResults/${from}/to/${to}`)
+            .then((response) => {
+              const { journeys: journeysArr } = response.data;
+              let filteredRoutes = journeysArr.map((route) => ({
+                journeyTime: route.duration,
+                orderedLines: route.legs,
+              }));
+              filteredRoutes = filteredRoutes
+                .map((route) => ({
+                  journeyTime: route.journeyTime,
+                  orderedLines: route.orderedLines
+                    .map((line) => ({
+                      name: line.routeOptions
+                        .filter((routeOption) => !!routeOption.lineIdentifier),
+                    }))
+                    .filter((line) => line.name.length > 0)
+                    .filter((line) => line.name[0].name.match('^[a-zA-Z\(\)]+$'))
+                    .map((line) => ({ name: line.name[0].name })),
+                }))
+                .filter((route) => route.orderedLines.length > 0);
+
+              axios.post('http://localhost:9095/journey', {
+                // proxy: 'http://localhost:9095',{
+                start: from,
+                end: to,
+                token: localStorage.getItem('accessToken'),
+                routes: filteredRoutes,
+              })
+                .then((resp) => {
+                  if (resp.status === 200) {
+                    loadHistory();
+                  }
+                });
+            });
+        }
+      });
+  };
+
+  useEffect(() => {
+    loadHistory();
   }, []);
 
   return (
