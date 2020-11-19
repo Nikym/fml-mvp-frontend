@@ -58,7 +58,7 @@ const JourneysDisplay = () => {
 
   const loadHistory = () => {
     setLoading(true);
-    axios.get(`http://1${process.env.URL || '10.1.0.215'}:9095/history`, {
+    axios.get(`http://${process.env.URL || '10.1.0.215'}:9095/history`, {
       params: {
         jwt: localStorage.getItem('accessToken'),
       },
