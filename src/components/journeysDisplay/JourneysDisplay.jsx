@@ -107,6 +107,7 @@ const JourneysDisplay = () => {
                         .filter((routeOption) => !!routeOption.lineIdentifier),
                     }))
                     .filter((line) => line.name.length > 0)
+                    // eslint-disable-next-line no-useless-escape
                     .filter((line) => line.name[0].name.match('^[a-zA-Z\(\)]+$'))
                     .map((line) => ({ name: line.name[0].name })),
                 }))
