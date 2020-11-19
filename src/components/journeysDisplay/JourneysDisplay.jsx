@@ -113,7 +113,6 @@ const JourneysDisplay = () => {
                 .filter((route) => route.orderedLines.length > 0);
 
               axios.post('http://localhost:9095/journey', {
-                // proxy: 'http://localhost:9095',{
                 start: from,
                 end: to,
                 token: localStorage.getItem('accessToken'),
