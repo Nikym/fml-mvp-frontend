@@ -47,7 +47,7 @@ const Login = () => {
 
   const handleLogin = () => {
     setLoading(true);
-    axios.post('http://172.55.1.2:8000/auth/login',
+    axios.post(`http://${process.env.URL || '10.1.0.215'}:8000/auth/login`,
       {
         username,
         password,

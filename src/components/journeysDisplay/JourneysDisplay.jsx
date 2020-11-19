@@ -58,7 +58,7 @@ const JourneysDisplay = () => {
 
   const loadHistory = () => {
     setLoading(true);
-    axios.get('http://172.55.1.3:9095/history', {
+    axios.get(`http://1${process.env.URL || '10.1.0.215'}:9095/history`, {
       params: {
         jwt: localStorage.getItem('accessToken'),
       },
@@ -77,7 +77,7 @@ const JourneysDisplay = () => {
   };
 
   const handleSubmit = () => {
-    axios.get('http://172.55.1.3:9095/journey', {
+    axios.get(`http://${process.env.URL || '10.1.0.215'}:9095/journey`, {
       params: {
         jwt: localStorage.getItem('accessToken'),
         start: from,
@@ -114,7 +114,7 @@ const JourneysDisplay = () => {
                 }))
                 .filter((route) => route.orderedLines.length > 0);
 
-              axios.post('http://172.55.1.3:9095/journey', {
+              axios.post(`http://${process.env.URL || '10.1.0.215'}:9095/journey`, {
                 start: from,
                 end: to,
                 token: localStorage.getItem('accessToken'),

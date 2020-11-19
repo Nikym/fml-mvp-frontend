@@ -62,7 +62,7 @@ const Register = () => {
       return;
     }
 
-    axios.post('http://172.55.1.2:8000/auth/register',
+    axios.post(`http://${process.env.URL || '10.1.0.215'}:8000/auth/register`,
       {
         username,
         password,
