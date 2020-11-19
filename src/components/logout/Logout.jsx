@@ -23,7 +23,7 @@ const Logout = () => {
   const { userDispatch } = useContext(userContext);
 
   const handleLogout = () => {
-    axios.get('http://localhost:8000/auth/logout', {
+    axios.get('http://172.55.1.2:8000/auth/logout', {
       withCredentials: true,
     })
       .then(() => {

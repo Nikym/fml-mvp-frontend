@@ -51,7 +51,7 @@ const UserContext = ({ children }) => {
   const [apiResponse, setApiResponse] = useState(undefined);
 
   const submitRefreshToken = () => {
-    axios.get('http://localhost:8000/auth/token', {
+    axios.get('http://172.55.1.2:8000/auth/token', {
       withCredentials: true,
     })
       .then((res) => {
