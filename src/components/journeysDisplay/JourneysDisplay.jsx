@@ -70,6 +70,7 @@ const JourneysDisplay = () => {
         setLoading(false);
       })
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(err);
         setLoading(false);
       });
